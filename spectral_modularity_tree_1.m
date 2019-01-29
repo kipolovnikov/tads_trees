@@ -42,36 +42,46 @@ function [numc, lbord, rbord, medsizes, mods] = spectral_modularity_tree_1(m, g)
         mod = [0];
         k = 1;
         k1 = 1;
+%         lev
+%         lbord
+%         rbord
         for i = 1:length(lbord)
            [num, md] = division_tree(b, lbord(i), rbord(i));
            %numv(i) = num;
-           if num > 3 && num < rbord(i)-2
+           if num > 3 && rbord(i)-lbord(i)+1-num > 3
                mod(k1) = md;
                k1 = k1 + 1;
                lbord_new(k) = lbord(i);
                lbord_new(k+1) = lbord(i)+num;
                rbord_new(k) = lbord(i)+num-1;
                rbord_new(k+1) = rbord(i);
+
                k = k + 2;
            else
                lbord_new(k) = lbord(i);
                rbord_new(k) = rbord(i);
+
                k = k + 1;
            end
         end
+        
         meanmod = mean(mod);
         mods(lev) = meanmod;
+        lbord = [];
+        rbord = [];
         lbord = lbord_new;
         rbord = rbord_new;
+
     end
     
+        
     
     % CHECK
     numc = 0;
     for i = 1:length(lbord)
         len = rbord(i) - lbord(i) + 1;
         if len <= 3
-            printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!")
+            "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!"
         end
     end
 
